@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mohammed Banabilh · ML & MLOps</title>
+<meta name="description" content="Mohammed Banabilh builds AI and machine learning products in Arabic and English. An interactive map of his projects, with live demos.">
+<meta property="og:title" content="Mohammed Banabilh · ML & MLOps">
+<meta property="og:description" content="An interactive map of my projects, with live demos you can try.">
+<meta property="og:image" content="https://mohammed-890.github.io/assets/nahem.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ffffff; --ink:#15182b; --muted:#5d6275; --rule:#e3e4ea; --panel:#f5f5f8;
+  --ml:#7b5cff; --ai:#ff6b2c; --data:#119c82; --uni:#8a8fa3; --board:#1d2340; --board-ink:#ffd34d;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --paper:#11131f; --ink:#eef0f6; --muted:#a3a8bb; --rule:#2a2e43; --panel:#191c2c; --board:#0b0d17; --uni:#7d8299; }
+}
+:root[data-theme="dark"]{ --paper:#11131f; --ink:#eef0f6; --muted:#a3a8bb; --rule:#2a2e43; --panel:#191c2c; --board:#0b0d17; --uni:#7d8299; }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:17px;line-height:1.55}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+header.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 0;flex-wrap:wrap}
+.brand{font-weight:800;font-size:18px;letter-spacing:-.2px;text-decoration:none;display:flex;align-items:center;gap:10px}
+.brand i{width:14px;height:14px;border-radius:50%;border:3px solid var(--ml);display:inline-block}
+nav a{font-weight:600;font-size:15px;text-decoration:none;margin-left:20px;color:var(--muted)}
+nav a:hover,nav a:focus-visible{color:var(--ink)}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding:36px 0 56px}
+h1{font-size:clamp(40px,6vw,68px);line-height:1.02;letter-spacing:-2px;margin:0 0 20px;font-weight:800}
+.lede{font-size:20px;color:var(--muted);max-width:34ch;margin:0 0 28px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;border:2px solid var(--ink)}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn:focus-visible,.station:focus-visible{outline:3px solid var(--ml);outline-offset:3px}
+
+/* live departure board */
+.board{background:var(--board);color:#fff;border-radius:16px;padding:22px 24px;font-family:"JetBrains Mono",monospace;box-shadow:0 20px 50px rgba(21,24,43,.18)}
+.board .head{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#b9bdd6;margin-bottom:14px;font-family:Inter,sans-serif;font-weight:600}
+.live{display:inline-flex;align-items:center;gap:7px;color:#7fe3b8}
+.live b{width:8px;height:8px;border-radius:50%;background:#7fe3b8;animation:pulse 1.6s infinite}
+.live.off{color:#b9bdd6}.live.off b{background:#b9bdd6;animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(127,227,184,.7)}70%{box-shadow:0 0 0 9px rgba(127,227,184,0)}100%{box-shadow:0 0 0 0 rgba(127,227,184,0)}}
+.row{display:grid;grid-template-columns:1fr auto;gap:12px;padding:10px 0;border-top:1px dashed rgba(255,255,255,.14);font-size:15px}
+.row span:first-child{color:#d6d9ec}
+.row span:last-child{color:var(--board-ink);font-weight:700;text-align:right}
+.board .foot{margin-top:12px;font-size:12.5px;color:#9aa0bf;font-family:Inter,sans-serif;line-height:1.45}
+.board .foot a{color:#fff}
+
+/* live demo */
+.try{display:flex;flex-direction:column;align-items:center}
+.tabs{display:flex;gap:6px;background:var(--panel);padding:5px;border-radius:12px;margin-bottom:14px}
+.tabs button{font:600 14px Inter,sans-serif;border:0;background:transparent;color:var(--muted);padding:9px 14px;border-radius:9px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+.tabs button:focus-visible{outline:3px solid var(--ml);outline-offset:2px}
+.phone{width:min(360px,100%);height:600px;border:10px solid var(--ink);border-radius:38px;overflow:hidden;background:#fff;box-shadow:0 30px 60px rgba(21,24,43,.22)}
+.phone iframe{width:100%;height:100%;border:0;display:block}
+.hint{font-size:14px;color:var(--muted);text-align:center;max-width:36ch;margin:12px 0 0}
+.live{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--data)}
+.live b{width:8px;height:8px;border-radius:50%;background:var(--data);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(17,156,130,.6)}70%{box-shadow:0 0 0 9px rgba(17,156,130,0)}100%{box-shadow:0 0 0 0 rgba(17,156,130,0)}}
+.mini{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 14px}
+.mini div{background:var(--paper);border-radius:10px;padding:10px}
+.mini b{display:block;font-size:20px}
+.mini span{font-size:12.5px;color:var(--muted)}
+
+/* map */
+section{padding:56px 0;border-top:1px solid var(--rule)}
+h2{font-size:34px;letter-spacing:-1px;margin:0 0 8px;font-weight:800}
+.sub{color:var(--muted);margin:0 0 26px;max-width:62ch}
+.legend{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;font-weight:600;margin-bottom:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:26px;height:6px;border-radius:3px;display:inline-block}
+.mapgrid{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:start}
+.map{width:100%;height:auto;display:block;overflow:visible}
+.map .line{fill:none;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.map .future{stroke-dasharray:2 16}
+.station{cursor:pointer;pointer-events:bounding-box}
+.station circle{fill:var(--paper);stroke:var(--ink);stroke-width:4;transition:r .15s}
+.station.hub circle{stroke-width:5}
+.station:hover circle,.station.on circle{r:15}
+.station.on circle{fill:var(--ink)}
+.station text{font-size:23px;font-weight:700;fill:var(--ink)}
+.station .tag{font-size:17px;font-weight:600;fill:var(--muted)}
+.stub circle{fill:var(--paper);stroke:var(--uni);stroke-width:3;stroke-dasharray:3 3}
+.stub text{font-size:19px;font-weight:600;fill:var(--muted)}
+.bus{fill:var(--ink)}
+
+.panel{background:var(--panel);border-radius:16px;padding:22px;position:sticky;top:20px;min-height:420px}
+.panel img{width:100%;border-radius:10px;display:block;margin-bottom:16px;aspect-ratio:16/9;object-fit:cover;object-position:top left;background:var(--rule)}
+.panel .kick{font-size:13px;font-weight:700;margin-bottom:6px}
+.panel h3{font-size:26px;letter-spacing:-.6px;margin:0 0 8px;line-height:1.1}
+.panel p{margin:0 0 14px;color:var(--muted);font-size:16px}
+.panel ul{margin:0 0 16px;padding-left:18px;font-size:15px}
+.panel li{margin-bottom:5px}
+.stat{display:flex;align-items:baseline;gap:10px;margin:0 0 14px}
+.stat b{font-size:30px;letter-spacing:-1px}
+.stat span{font-size:14px;color:var(--muted)}
+.links{display:flex;gap:10px;flex-wrap:wrap}
+.links a{font-weight:700;font-size:14px;padding:9px 14px;border-radius:9px;background:var(--ink);color:var(--paper);text-decoration:none}
+.links a.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.note{font-size:13px;color:var(--muted);margin-top:12px}
+
+/* how I work */
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.cols h3{font-size:19px;margin:0 0 6px}
+.cols p{margin:0;color:var(--muted);font-size:16px}
+footer{padding:40px 0 60px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;color:var(--muted);font-size:15px}
+footer a{font-weight:700;color:var(--ink);margin-right:18px}
+
+@media (max-width:900px){
+  .hero,.mapgrid,.cols{grid-template-columns:1fr}
+  .panel{position:static;min-height:0}
+  nav a{margin-left:14px}
+}
+@media (max-width:520px){
+  .wrap{padding:0 16px}
+  nav{display:none}
+  .station text{font-size:30px}
+  .station .tag{font-size:22px}
+  .stub text{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){ .live b{animation:none} .bus animateMotion{display:none} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#"><i aria-hidden="true"></i>Mohammed Banabilh</a>
+    <nav aria-label="Sections"><a href="#map">Projects</a><a href="#how">How I work</a><a href="#contact">Contact</a></nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>I build AI people can actually use.</h1>
+      <p class="lede">Final-year Computer Science with AI student at Sheffield Hallam. I build machine learning and AI products end to end, in Arabic and English. Try two of them right here.</p>
+      <div class="cta">
+        <a class="btn solid" href="#map">Explore my projects</a>
+        <a class="btn" href="https://www.linkedin.com/in/mohammed-banabilh-6340553b0/">LinkedIn</a>
+        <a class="btn" href="https://github.com/Mohammed-890">GitHub</a>
+      </div>
+    </div>
+
+    <div class="try">
+      <div class="tabs" role="tablist" aria-label="Live demos">
+        <button role="tab" aria-selected="true" data-demo="nahem">Nahem chatbot</button>
+        <button role="tab" aria-selected="false" data-demo="showme">Show Me</button>
+      </div>
+      <div class="phone"><iframe id="demo" title="Live demo" src="https://mohammed-890.github.io/nahem-chatbot/" loading="lazy"></iframe></div>
+      <p class="hint" id="hint">The real thing, running live. Ask it something in Arabic or English, or press the guided tour.</p>
+    </div>
+  </div>
+
+  <section id="map">
+    <h2>The project map</h2>
+    <p class="sub">Each line is a kind of work, each stop is a project. Select a stop to see what it does, the numbers behind it and where to try it.</p>
+    <div class="legend" aria-hidden="true">
+      <span><i style="background:var(--ml)"></i>MLOps</span>
+      <span><i style="background:var(--ai)"></i>AI products</span>
+      <span><i style="background:var(--data)"></i>Data &amp; simulation</span>
+      <span><i style="background:var(--uni)"></i>University</span>
+    </div>
+    <div class="mapgrid">
+      <svg class="map" viewBox="0 0 1000 710" role="group" aria-label="Project map. Each stop is a project; select one to read about it.">
+        <!-- AI products -->
+        <path class="line" style="stroke:var(--ai)" d="M110 110 H560 Q590 110 610 130 L700 220 Q720 240 750 240 H900"/>
+        <!-- MLOps -->
+        <path class="line" style="stroke:var(--ml)" d="M110 340 H520"/>
+        <path class="line future" style="stroke:var(--ml)" d="M520 340 H900"/>
+        <!-- Data & simulation -->
+        <path class="line" style="stroke:var(--data)" d="M110 500 H300 Q330 500 350 480 L480 350 Q500 340 520 340"/>
+        <!-- University -->
+        <path class="line" style="stroke:var(--uni)" d="M110 500 Q110 640 170 640 H700"/>
+        <path class="line future" style="stroke:var(--uni)" d="M700 640 H900"/>
+
+        <g class="bus" aria-hidden="true">
+          <rect x="-15" y="-10" width="30" height="20" rx="5"/>
+          <animateMotion dur="9s" repeatCount="indefinite" rotate="auto" path="M110 340 H520"/>
+        </g>
+
+        <g class="station on" data-id="nahem" tabindex="0" role="button" aria-label="Nahem Assistant"><circle cx="110" cy="110" r="12"/><text x="110" y="70" text-anchor="middle">Nahem</text></g>
+        <g class="station" data-id="seat" tabindex="0" role="button" aria-label="Seat Scout"><circle cx="330" cy="110" r="12"/><text x="330" y="70" text-anchor="middle">Seat Scout</text></g>
+        <g class="station" data-id="showme" tabindex="0" role="button" aria-label="Show Me"><circle cx="540" cy="110" r="12"/><text x="540" y="70" text-anchor="middle">Show Me</text></g>
+        <g class="station" data-id="worldcup" tabindex="0" role="button" aria-label="World Cup Data Chat"><circle cx="900" cy="240" r="12"/><text x="915" y="200" text-anchor="end">World Cup Chat</text></g>
+
+        <g class="station" data-id="churn" tabindex="0" role="button" aria-label="ChurnOps"><circle cx="110" cy="340" r="12"/><text x="110" y="300" text-anchor="middle">ChurnOps</text></g>
+        <g class="station hub" data-id="ghost" tabindex="0" role="button" aria-label="Ghost Bus Detector"><circle cx="520" cy="340" r="15"/><text x="520" y="297" text-anchor="middle">Ghost Bus</text><text class="tag" x="548" y="382" text-anchor="start">collecting live</text></g>
+        <g class="stub" aria-hidden="true"><circle cx="900" cy="340" r="12"/><text x="915" y="300" text-anchor="end">Next stop: your team</text></g>
+
+        <g class="station" data-id="football" tabindex="0" role="button" aria-label="Football Butterfly Effect"><circle cx="300" cy="500" r="12"/><text x="300" y="545" text-anchor="middle">Football Butterfly</text></g>
+        <g class="station hub" data-id="collision" tabindex="0" role="button" aria-label="Sheffield Road Collision ML"><circle cx="110" cy="500" r="14"/><text x="110" y="462" text-anchor="middle">Collision ML</text></g>
+
+        <g class="station" data-id="attendflow" tabindex="0" role="button" aria-label="AttendFlow"><circle cx="400" cy="640" r="12"/><text x="400" y="602" text-anchor="middle">AttendFlow</text></g>
+        <g class="station" data-id="smartquote" tabindex="0" role="button" aria-label="SmartQuote"><circle cx="700" cy="640" r="12"/><text x="700" y="602" text-anchor="middle">SmartQuote</text></g>
+        <g class="stub" aria-hidden="true"><circle cx="900" cy="640" r="12"/><text x="915" y="692" text-anchor="end">Fruit grading (building)</text></g>
+      </svg>
+
+      <aside class="panel" id="panel" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <section id="how">
+    <h2>How I work</h2>
+    <p class="sub">The same three habits run through every project on the map.</p>
+    <div class="cols">
+      <div><h3>Beat a baseline first</h3><p>Every model is compared with a simple rule. My first Ghost Bus model lost to one, so I simplified it until it won.</p></div>
+      <div><h3>Test on data it hasn't seen</h3><p>Time-based splits, held-out variants and evaluation sets, and every project says plainly what it can't do yet.</p></div>
+      <div><h3>Check the numbers before sharing</h3><p>Ghost Bus's first real day showed 46 ghost buses. 45 were duplicate timetable entries. I found it, fixed it and added a test.</p></div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div><a href="mailto:banabilh19@gmail.com">banabilh19@gmail.com</a><a href="https://www.linkedin.com/in/mohammed-banabilh-6340553b0/">LinkedIn</a><a href="https://github.com/Mohammed-890">GitHub</a></div>
+    <div>Open to ML engineering and MLOps internships now, and graduate roles from July 2027.</div>
+  </footer>
+</div>
+
+<script>
+const P = {
+  ghost:{line:"MLOps · Data & simulation",color:"var(--ml)",title:"Ghost Bus Detector",img:"assets/ghost-bus.png",
+    text:"Finds Sheffield buses that are on the timetable but never come, from the government's live GPS feed, and predicts which departures will be missed.",
+    stat:["300/300","requests served while an API pod was killed"],
+    bullets:["Matches every timetabled trip against live bus positions, minute by minute","MLflow registry: a new model only goes live if it beats the current one on the same unseen days","Retrains itself on data drift or falling live accuracy","Kubernetes, Helm, Terraform, Argo CD, Prometheus, CI/CD with an end-to-end test"],
+    links:[["Live site","https://mohammed-890.github.io/ghost-bus/"],["Code","https://github.com/Mohammed-890/ghost-bus"]],
+    note:"Started collecting real data on 1 Nov 2026, so the numbers are still small and grow every day. Model accuracy will be reported once enough days are judged.", live:true},
+  churn:{line:"MLOps",color:"var(--ml)",title:"ChurnOps",img:"assets/churn.png",
+    text:"A customer churn model served through a tested API, packaged with Docker, with Terraform for AWS ECS.",
+    stat:["0.84","ROC-AUC on 1,409 held-out customers"],
+    bullets:["Logistic regression on 8 account features, no leakage","12 automated tests in GitHub Actions","Infrastructure code for ECS Fargate (validated, not deployed)"],
+    links:[["Code","https://github.com/Mohammed-890/churn-mlops"]]},
+  nahem:{line:"AI products",color:"var(--ai)",title:"Nahem Assistant",img:"assets/nahem.png",
+    text:"An Arabic-first ordering assistant for a 24-hour burger restaurant in Madinah. It answers questions and turns a chat into a priced WhatsApp order.",
+    stat:["450+","customer-style questions tested"],
+    bullets:["My own Arabic language engine: dialect, typos, follow-up questions","Group and budget plans, nutrition and allergens","Optional Gemini layer with a fallback, so customers always get an answer"],
+    links:[["Live demo","https://mohammed-890.github.io/nahem-chatbot/"],["Code","https://github.com/Mohammed-890/nahem-chatbot"]]},
+  seat:{line:"AI products",color:"var(--ai)",title:"Seat Scout",img:"assets/seat-scout.png",
+    text:"An AI seat adviser for flights that never breaks a budget or splits a group: facts come from code, the AI only explains them.",
+    stat:["47/47","evaluation cases, against 9/47 for a naive baseline"],
+    bullets:["Bounded tool-use agent with validated tools","Hard constraints and a final validator in code","3D cabin preview, English and Arabic"],
+    links:[["Code","https://github.com/Mohammed-890/seat-scout"]],note:"Portfolio prototype with demo data; not linked to any airline."},
+  showme:{line:"AI products",color:"var(--ai)",title:"Show Me",img:"assets/show-me.png",
+    text:"Stuck on a GOV.UK or NHS page? Send a screenshot and it circles exactly what to tap, and reads it out in English, Arabic, Urdu or Polish.",
+    stat:["79/80","screenshots correct, including 63/64 harder variants"],
+    bullets:["Two-pass OCR that reads white text on green buttons","Only points at buttons a step guide names, so it never invents one","Runs fully in the browser: screenshots never leave the phone"],
+    links:[["Live demo","https://mohammed-890.github.io/show-me/"],["Code","https://github.com/Mohammed-890/show-me"]]},
+  worldcup:{line:"AI products",color:"var(--ai)",title:"World Cup Data Chat",img:"assets/worldcup.png",
+    text:"Ask football questions in plain English. An AI writes SQL over every World Cup match, runs it read-only and shows the query.",
+    stat:["50/50","test questions with hand-written correct SQL"],
+    bullets:["Read-only database, single SELECT only","Self-corrects once when a query errors"],
+    links:[["Code","https://github.com/Mohammed-890/worldcup-data-chat"]]},
+  football:{line:"Data & simulation",color:"var(--data)",title:"Football Butterfly Effect",img:"assets/football.png",
+    text:"Flip a real turning point in football history and simulate how the following seasons might have changed.",
+    stat:["45,786","real league matches behind the model"],
+    bullets:["Elo ratings and a Poisson goals model fitted by maximum likelihood","2,000 Monte Carlo seasons per scenario","Effect measured as flipped world minus a simulated control"],
+    links:[["Demo video","https://github.com/Mohammed-890/football-butterfly-effect/blob/main/docs/demo.mp4"],["Code","https://github.com/Mohammed-890/football-butterfly-effect"]]},
+  collision:{line:"University · Data & simulation",color:"var(--data)",title:"Sheffield Road Collision ML",img:"assets/collision.png",
+    text:"End-to-end machine learning on UK road-collision data for Sheffield: exploration, classification, regression and clustering.",
+    stat:["First","grade, AI & Machine Learning module"],
+    bullets:["Nine classifiers compared on collision severity","KMeans, DBSCAN and hierarchical clustering","Learning curves and feature importance"],
+    links:[["Code","https://github.com/Mohammed-890/sheffield-collision-ml"]]},
+  attendflow:{line:"University",color:"var(--uni)",title:"AttendFlow",
+    text:"University attendance: students check in with a rotating code, tutors keep an audited register, and each role sees only their own students.",
+    bullets:["Three FastAPI services, each with its own PostgreSQL database","Transactional outbox and Redis Streams, so no change is lost","Two-step verification, accessibility tests, load tests"],
+    links:[],note:"Software Architecture and Design coursework. The code is private."},
+  smartquote:{line:"University",color:"var(--uni)",title:"SmartQuote for Giacom",
+    text:"A ticketing and quoting system for Giacom, a UK cloud services company, built in a team for a real client.",
+    bullets:["React front end, Node.js rules that estimate cost, time and priority","Agile sprints, MoSCoW priorities and client demos"],
+    links:[],note:"Professional Software Projects module."},
+};
+const panel = document.getElementById("panel");
+let show = function(id){
+  const p = P[id]; if(!p) return;
+  document.querySelectorAll(".station").forEach(s=>s.classList.toggle("on", s.dataset.id===id));
+  panel.innerHTML = `
+    ${p.img ? `<img src="${p.img}" alt="${p.title} screenshot" loading="lazy">` : ""}
+    <div class="kick" style="color:${p.color}">${p.line}</div>
+    <h3>${p.title}</h3>
+    <p>${p.text}</p>
+    ${p.live ? `<div class="live"><b></b>Collecting live from Sheffield</div><div class="mini" id="mini"><div><b>…</b><span>trips checked</span></div><div><b>…</b><span>never came</span></div><div><b>…</b><span>buses per minute</span></div></div>` : ""}
+    ${p.stat ? `<div class="stat"><b>${p.stat[0]}</b><span>${p.stat[1]}</span></div>` : ""}
+    <ul>${p.bullets.map(b=>`<li>${b}</li>`).join("")}</ul>
+    <div class="links">${p.links.map((l,i)=>`<a class="${i?'ghost':''}" href="${l[1]}">${l[0]}</a>`).join("")}</div>
+    ${p.note ? `<div class="note">${p.note}</div>` : ""}`;
+};
+document.querySelectorAll(".station").forEach(s=>{
+  s.addEventListener("click",()=>{ show(s.dataset.id); if(innerWidth<900) panel.scrollIntoView({behavior:"smooth",block:"start"}); });
+  s.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); s.click(); }});
+});
+show("nahem");
+
+// live Ghost Bus numbers, shown in its panel
+let GB=null;
+fetch("https://raw.githubusercontent.com/Mohammed-890/ghost-bus/main/docs/data/summary.json",{cache:"no-store"}).then(r=>r.json()).then(d=>{GB=d;fillMini();}).catch(()=>{});
+const fmt = n => n==null ? "–" : Number(n).toLocaleString("en-GB");
+function fillMini(){
+  const m=document.getElementById("mini"); if(!m||!GB) return;
+  const h=GB.health||{};
+  const v=[GB.judged, GB.ghosts, h.median_buses?"~"+fmt(h.median_buses):null];
+  m.querySelectorAll("b").forEach((b,i)=>b.textContent = v[i]==null?"–":(typeof v[i]==="string"?v[i]:fmt(v[i])));
+}
+const _show = show; show = id => { _show(id); fillMini(); };
+// demo tabs
+const DEMOS={nahem:["https://mohammed-890.github.io/nahem-chatbot/","The real thing, running live. Ask it something in Arabic or English, or press the guided tour."],
+             showme:["https://mohammed-890.github.io/show-me/","Pick a task, add a screenshot of the GOV.UK page, and it circles what to tap."]};
+document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected", x===b));
+  const [u,t]=DEMOS[b.dataset.demo]; document.getElementById("demo").src=u; document.getElementById("hint").textContent=t;
+}));
+</script>
+</body>
+</html>
